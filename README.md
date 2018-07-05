@@ -20,9 +20,6 @@ Init Boot Sequence 'CentSO'
     rc.local : sys admins can use for run their requirment
 
 
-    Lec : init
-
-
 #### Basic of unit files
 
 1. init and parts of upstart rely on Bash shell script
@@ -46,7 +43,7 @@ Init Boot Sequence 'CentSO'
 4. view all unit file on a system
 
     systemctl list-unit-files
-
+5. All unit file follow the INI file format
 
 #### Modification Unit file
 
@@ -73,3 +70,33 @@ Init Boot Sequence 'CentSO'
   systemctl edit --full <unit>
 
 4. Run the systemd-delta command to view modified unit files
+5. after ANY modification to a unit file, you must run th following command to reload daemon.
+
+    systemctl daemon-reload
+
+
+#### Target types
+
+1. multi-user.target - muti-user system runlevel 3 Provided
+2. graphical.target - muti-user system with a desktop enviroment
+3. rescue.target - pull in a basic system and file system mounts and provides a recurse shell
+4. basic.target  basic system, used during the boot process before anther target takes over
+5. sysinit.target
+
+  systemctl isolate <target> : will chaneg the running state of the system form the current target to a different target
+  systemctl rescue : almost identical to  the system V init single-user mode
+  systemctl reboot : will run the reboot target
+  systemctl poweoff : will perform a complete shutdown
+
+### Service unit file
+
+1. service unit files have following config
+
+* [service] - denotes this is a service
+* [install] - contains information about the service install
+* man 5 systemd.service
+
+    systemclt list-units -t service
+    systmectl enable <daemon.service>
+    systemctl disable <daemon.service>
+    systmectl is-enabled <daemon.service>
